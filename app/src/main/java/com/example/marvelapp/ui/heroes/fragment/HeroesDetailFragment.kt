@@ -45,6 +45,12 @@ class HeroesDetailFragment: Fragment() {
 
         hero = (arguments?.getSerializable(ARG_HERO) as? Result)!!
 
+        setupLayout()
+
+    }
+
+    private fun setupLayout() {
+
         Picasso.get()
             .load(hero!!.thumbnail.path + "." + hero!!.thumbnail.extension)
             .fit()

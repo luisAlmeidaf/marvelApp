@@ -34,7 +34,6 @@ class HeroesFragment :  Fragment(){
     private var heroesList: MutableList<Result> = mutableListOf()
 
     private var offset: Int = 0
-    private var lastPosition = 0
     private var direction: Boolean = true
 
     private val onHeroesDetailClick = { position: Int ->
@@ -76,9 +75,7 @@ class HeroesFragment :  Fragment(){
                 super.onScrollStateChanged(recyclerView, newState)
 
                 if (!recyclerView.canScrollHorizontally(1) && (newState == SCROLL_STATE_DRAGGING)) {
-                    Toast.makeText(context, "Last", Toast.LENGTH_LONG).show()
-                    direction = true
-                    updateOffset(true)
+                    updateOffset()
                 }
             }
         })
@@ -109,12 +106,16 @@ class HeroesFragment :  Fragment(){
                 rv_characters.visibility = View.VISIBLE
             }
         })
+
+        viewModel.errorMessage().observe(this, Observer {
+            Toast.makeText(context, it, Toast.LENGTH_LONG).show()
+        })
     }
 
-    private fun updateOffset(direction: Boolean) {
+    private fun updateOffset() {
         lav_android.visibility = View.VISIBLE
         rv_characters.visibility = View.INVISIBLE
-        if (direction) offset += 100
+        offset += 100
         viewModel.getHeroes(offset)
     }
 

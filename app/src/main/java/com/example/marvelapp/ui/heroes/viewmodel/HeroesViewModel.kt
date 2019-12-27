@@ -12,18 +12,21 @@ class HeroesViewModel (private val repository: MarvelRepository = MarvelReposito
     : ViewModel() {
 
     private val heroesList: MutableLiveData<Data> = MutableLiveData()
+    private val error: MutableLiveData<String> = MutableLiveData()
+
     fun getHeroesList() = heroesList
+
+    fun errorMessage() = error
 
     fun getHeroes(offset: Int) {
         repository.getCharacter(offset, object : OnGetMarvelCallback {
 
             override fun onSuccess(response: Data) {
-                Log.d("Reponse", "It's Ok!!!")
                 heroesList.value = response
             }
 
             override fun onError() {
-                Log.e("ErrorViewModel", "Error in viewmodel call")
+                error.postValue("An error has ocurred, please try again later.")
             }
         })
     }
