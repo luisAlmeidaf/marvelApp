@@ -4,6 +4,9 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+def MARVEL_PUBLIC_KEY = MarvelPublicKey
+def MARVEL_PRIVATE_KEY = MarvelPrivateKey
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
@@ -14,6 +17,12 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        each { type ->
+            type.buildConfigField 'String', 'MarvelPublicKey', MARVEL_PUBLIC_KEY
+            type.buildConfigField 'String', 'MarvelPrivateKey', MARVEL_PRIVATE_KEY
+            buildConfigField 'String', 'BASE_URL', '"http://gateway.marvel.com/v1/public/"'
+        }
     }
     buildTypes {
         release {

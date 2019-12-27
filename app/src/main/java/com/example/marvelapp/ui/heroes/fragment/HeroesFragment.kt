@@ -102,7 +102,7 @@ class HeroesFragment :  Fragment(){
                 }
                 adapter.updateList(heroesList)
                 adapter.receiveClick(onHeroesDetailClick)
-                lav_android.visibility = View.GONE
+                lav_android.visibility = View.INVISIBLE
                 rv_characters.visibility = View.VISIBLE
             }
         })

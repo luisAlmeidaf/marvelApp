@@ -2,6 +2,7 @@ package com.example.marvelapp.data.repository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.example.marvelapp.BuildConfig
 import com.example.marvelapp.data.datasource.MarvelApi
 import com.example.marvelapp.data.datasource.OnGetMarvelCallback
 import com.example.marvelapp.domain.model.Data
@@ -20,9 +21,9 @@ class MarvelRepositoryImpl: MarvelRepository {
     private var heroesData: MutableLiveData<Data> = MutableLiveData()
 
     companion object {
-        const val BASE_URL = "http://gateway.marvel.com/v1/public/"
-        const val PUBLIC_KEY = "f679b123477e9460ff692f596fcd91c2"
-        const val PRIVATE_KEY = "867e099f7701dd1fa19be0b4933f8fbc9896a587"
+        const val BASE_URL = BuildConfig.BASE_URL
+        val PUBLIC_KEY = BuildConfig.MarvelPublicKey
+        val PRIVATE_KEY = BuildConfig.MarvelPrivateKey
     }
 
     init {
