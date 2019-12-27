@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="#000000"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <FrameLayout
+                android:id="@+id/image_thumbnail"
+                android:layout_width="match_parent"
+                card_view:layout_constraintLeft_toLeftOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent"
+                card_view:layout_constraintRight_toRightOf="parent"
+                android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/image_hero"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                card_view:layout_constraintLeft_toLeftOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent"
+                card_view:layout_constraintRight_toRightOf="parent"
+                android:clickable="true"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/custom_gradient_bottom"/>
+
+                <ImageView
+                    android:id="@+id/ic_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_close"
+                    android:layout_gravity="end"
+                    card_view:layout_constraintLeft_toLeftOf="parent"
+                    card_view:layout_constraintTop_toTopOf="parent"
+                    card_view:layout_constraintHorizontal_bias="1"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginTop="40dp"
+                    card_view:layout_constraintRight_toRightOf="parent"
+                    android:clickable="true"/>
+
+            </FrameLayout>
+
+
+            <TextView
+                android:id="@+id/text_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="24sp"
+                android:textColor="@android:color/white"
+                tools:text="Titulo"
+                android:layout_marginStart="20dp"
+                card_view:layout_constraintHorizontal_bias="0"
+                card_view:layout_constraintTop_toBottomOf="@id/image_thumbnail"
+                card_view:layout_constraintRight_toRightOf="parent"
+                card_view:layout_constraintLeft_toLeftOf="parent"/>
+
+            <TextView
+                android:id="@+id/text_number_series"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="10dp"
+                android:textColor="#2ecc71"
+                android:textStyle="bold"
+                tools:text="Numero de series"
+                card_view:layout_constraintHorizontal_bias="0"
+                card_view:layout_constraintTop_toBottomOf="@id/text_name"
+                card_view:layout_constraintRight_toRightOf="parent"
+                card_view:layout_constraintLeft_toLeftOf="parent"
+                android:lines="2"/>
+
+            <TextView
+                android:id="@+id/text_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="10dp"
+                android:textColor="@android:color/white"
+                tools:text="ahuahauahuahauhaua"
+                card_view:layout_constraintTop_toBottomOf="@id/text_number_series"
+                card_view:layout_constraintRight_toRightOf="parent"
+                card_view:layout_constraintLeft_toLeftOf="parent"/>
+
+            <TextView
+                android:id="@+id/text_comics_published_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:textColor="@android:color/white"
+                android:text="Appearances:"
+                card_view:layout_constraintHorizontal_bias="0"
+                android:textStyle="bold"
+                card_view:layout_constraintTop_toBottomOf="@id/text_description"
+                card_view:layout_constraintRight_toRightOf="parent"
+                card_view:layout_constraintLeft_toLeftOf="parent" />
+
+
+            <TextView
+                android:id="@+id/text_comics_published"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                tools:text="ahuajkemduwhaua"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@id/text_description"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintStart_toEndOf="@+id/text_comics_published_title" />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</LinearLayout>
