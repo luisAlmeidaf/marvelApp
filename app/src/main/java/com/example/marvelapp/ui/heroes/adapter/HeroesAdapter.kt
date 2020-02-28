@@ -5,9 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.marvelapp.R
 import com.example.marvelapp.domain.model.Result
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_heroes.view.*
 
 class HeroesAdapter(
@@ -18,7 +18,7 @@ class HeroesAdapter(
 
     private lateinit var onHeroesDetailClick: (Int) -> Unit
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HeroesAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(parent.inflate(R.layout.item_heroes))
     }
 
@@ -46,10 +46,11 @@ class HeroesAdapter(
         fun bind(result: com.example.marvelapp.domain.model.Result){
             this.char = result
 
-            Picasso.get()
+            Glide.with(itemView)
                 .load(result.thumbnail.path + "." + result.thumbnail.extension)
-                .fit()
-                .into(itemView.image_thumbnail)
+                .centerCrop() //4
+                //.placeholder(R.drawable.ic_image_place_holder)
+                .into(itemView.image_thumbnail) //8
 
             itemView.image_thumbnail.setOnClickListener {
                 onHeroesDetailClick.invoke(this.adapterPosition)

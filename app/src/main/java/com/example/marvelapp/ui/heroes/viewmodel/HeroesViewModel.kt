@@ -1,12 +1,15 @@
 package com.example.marvelapp.ui.heroes.viewmodel
 
-import android.util.Log
+
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.marvelapp.data.datasource.OnGetMarvelCallback
+import androidx.lifecycle.viewModelScope
 import com.example.marvelapp.domain.model.Data
 import com.example.marvelapp.data.repository.MarvelRepository
 import com.example.marvelapp.data.repository.MarvelRepositoryImpl
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class HeroesViewModel (private val repository: MarvelRepository = MarvelRepositoryImpl())
     : ViewModel() {
@@ -19,15 +22,11 @@ class HeroesViewModel (private val repository: MarvelRepository = MarvelReposito
     fun errorMessage() = error
 
     fun getHeroes(offset: Int) {
-        repository.getCharacter(offset, object : OnGetMarvelCallback {
-
-            override fun onSuccess(response: Data) {
-                heroesList.value = response
+        viewModelScope.launch(Dispatchers.IO) {
+        val callData = repository.getCharacter(offset)
+            withContext(Dispatchers.Main){
+                heroesList.value = callData
             }
-
-            override fun onError() {
-                error.postValue("An error has ocurred, please try again later.")
-            }
-        })
+    }
     }
 }

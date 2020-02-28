@@ -8,16 +8,11 @@ import retrofit2.http.Query
 interface MarvelApi{
 
     @GET("characters")
-    fun getCharacters(@Query("ts") ts: String,
+    suspend fun getCharacters(@Query("ts") ts: String,
                       @Query("apikey") apiKey: String,
                       @Query("hash") hash: String,
                       @Query("limit") limit: String = "99",
-                      @Query("offset") offset: String = "203"): Call<Data>
+                      @Query("offset") offset: String = "203"): Data
 
 
-}
-
-interface OnGetMarvelCallback{
-    fun onSuccess(marvelResponse: Data)
-    fun onError()
 }
