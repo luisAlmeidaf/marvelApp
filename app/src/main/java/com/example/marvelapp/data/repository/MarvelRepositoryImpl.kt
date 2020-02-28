@@ -1,23 +1,18 @@
 package com.example.marvelapp.data.repository
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.marvelapp.BuildConfig
 import com.example.marvelapp.data.datasource.MarvelApi
-import com.example.marvelapp.data.datasource.OnGetMarvelCallback
 import com.example.marvelapp.domain.model.Data
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
-class MarvelRepositoryImpl: MarvelRepository {
+class MarvelRepositoryImpl: MarvelRepository, KoinComponent {
 
-    private var service: MarvelApi
+    private val service: MarvelApi by inject()
     private var heroesData: MutableLiveData<Data> = MutableLiveData()
 
     companion object {
@@ -26,45 +21,11 @@ class MarvelRepositoryImpl: MarvelRepository {
         val PRIVATE_KEY = BuildConfig.MarvelPrivateKey
     }
 
-    init {
-        val retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        service = retrofit.create(MarvelApi::class.java)
-
-    }
-
-    override fun getCharacter(offset: Int, callback: OnGetMarvelCallback) {
+    override suspend fun getCharacter(offset: Int): Data {
         val ts = System.currentTimeMillis().toString()
         var hash = getMd5(ts)
 
-        service.getCharacters(ts, PUBLIC_KEY, hash, offset = offset.toString())
-            .enqueue(object : Callback<Data> {
-                override fun onResponse(call: Call<Data>, response: Response<Data>) {
-
-                    if (response.isSuccessful){
-                        if (response.body() != null){
-                            heroesData.postValue(response.body())
-                            callback.onSuccess(response.body()!!)
-                        } else {
-                            callback.onError()
-                            Log.e("Response", " response null")
-                        }
-
-                    } else {
-                        callback.onError()
-                        Log.e("Response", response.raw().networkResponse.toString())
-                    }
-
-                }
-
-                override fun onFailure(call: Call<Data>, t: Throwable) {
-                    callback.onError()
-                    t.printStackTrace()
-                    Log.e("Response", javaClass.simpleName + " not response 2 " + t)
-                }
-            })
+        return service.getCharacters(ts, PUBLIC_KEY, hash, offset = offset.toString())
     }
 
     private fun getMd5(ts: String): String {

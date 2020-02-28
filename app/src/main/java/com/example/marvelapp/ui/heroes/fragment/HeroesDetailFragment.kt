@@ -7,12 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.bumptech.glide.Glide
 import com.example.marvelapp.R
 import com.example.marvelapp.domain.model.Result
-import com.squareup.picasso.Picasso
+import com.example.marvelapp.utils.OnBackPressed
 import kotlinx.android.synthetic.main.heroes_detail_fragment.*
 
-class HeroesDetailFragment: Fragment() {
+class HeroesDetailFragment: Fragment(), OnBackPressed {
 
     companion object {
 
@@ -51,9 +52,9 @@ class HeroesDetailFragment: Fragment() {
 
     private fun setupLayout() {
 
-        Picasso.get()
+        Glide.with(context!!)
             .load(hero!!.thumbnail.path + "." + hero!!.thumbnail.extension)
-            .fit()
+            .fitCenter()
             .into(image_hero)
         text_name.text = hero!!.name
         if (hero!!.description.isNullOrEmpty()) text_description.text = "No description available" else text_description.text = hero!!.description
@@ -63,6 +64,10 @@ class HeroesDetailFragment: Fragment() {
         ic_close.setOnClickListener {
             closeDetailFragment()
         }
+    }
+
+    override fun onBackPressed() {
+        closeDetailFragment()
     }
 
     private fun closeDetailFragment() {

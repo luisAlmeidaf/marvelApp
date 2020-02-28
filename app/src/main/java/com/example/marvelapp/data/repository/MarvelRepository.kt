@@ -1,9 +1,9 @@
 package com.example.marvelapp.data.repository
 
-import com.example.marvelapp.data.datasource.OnGetMarvelCallback
+import com.example.marvelapp.domain.model.Data
 
 interface MarvelRepository{
     //name: String, apiKey: String, ts: String, hash: String,
-    fun getCharacter(offset: Int, callback: OnGetMarvelCallback)
+    suspend fun getCharacter(offset: Int): Data
 
 }

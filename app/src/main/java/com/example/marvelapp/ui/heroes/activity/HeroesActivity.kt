@@ -3,17 +3,15 @@ package com.example.marvelapp.ui.heroes.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.marvelapp.R
-import com.example.marvelapp.domain.di.koin.modules.uiModule
 import com.example.marvelapp.ui.heroes.fragment.HeroesFragment
-import org.koin.android.ext.android.startKoin
+import com.example.marvelapp.ui.heroes.fragment.HeroesDetailFragment
+
 
 class HeroesActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.heroes_activity)
-
-        startKoin(this, listOf(uiModule))
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
@@ -22,4 +20,16 @@ class HeroesActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        val fragments = supportFragmentManager.fragments
+        for (f in fragments) {
+            if (f != null && f is HeroesDetailFragment) {
+                f.onBackPressed()
+                return
+            }
+            if (f != null && f is HeroesFragment) {
+                super.onBackPressed()
+            }
+        }
+    }
 }

@@ -18,9 +18,11 @@ import kotlinx.android.synthetic.main.heroes_fragment.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_DRAGGING
+import com.bumptech.glide.Glide
 import com.example.marvelapp.ui.heroes.viewmodel.HeroesViewModel
-import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.item_heroes.view.*
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class HeroesFragment :  Fragment(){
@@ -29,10 +31,9 @@ class HeroesFragment :  Fragment(){
         fun newInstance() = HeroesFragment()
     }
 
-    private var viewModel: HeroesViewModel = HeroesViewModel()
+    private val viewModel: HeroesViewModel by viewModel()
     private val adapter: HeroesAdapter by inject()
     private var heroesList: MutableList<Result> = mutableListOf()
-
     private var offset: Int = 0
     private var direction: Boolean = true
 
@@ -87,14 +88,12 @@ class HeroesFragment :  Fragment(){
         lav_android.visibility = View.VISIBLE
         rv_characters.visibility = View.INVISIBLE
 
-        viewModel = ViewModelProviders.of(this).get(HeroesViewModel::class.java)
-
         viewModel.getHeroes(offset)
     }
 
     fun configureObservers(){
 
-        viewModel.getHeroesList().observe(this, Observer { heroes ->
+        viewModel.getHeroesList().observe(viewLifecycleOwner, Observer { heroes ->
             heroes?.let {
                 if (direction) rv_characters.scrollToPosition(offset)
                 it.data.results.forEach {
@@ -105,10 +104,6 @@ class HeroesFragment :  Fragment(){
                 lav_android.visibility = View.INVISIBLE
                 rv_characters.visibility = View.VISIBLE
             }
-        })
-
-        viewModel.errorMessage().observe(this, Observer {
-            Toast.makeText(context, it, Toast.LENGTH_LONG).show()
         })
     }
 
@@ -133,10 +128,11 @@ class HeroesFragment :  Fragment(){
 
     private fun setShowcase() {
 
-        Picasso.get()
+        Glide.with(context!!)
             .load("https://pixelz.cc/wp-content/uploads/2017/11/avengers-age-of-ultron-uhd-4k-wallpaper.jpg")
-            .fit()
-            .into(image_hero)
+            .fitCenter() //4
+            //.placeholder(R.drawable.ic_image_place_holder)
+            .into(image_hero) //8
     }
 
 }
