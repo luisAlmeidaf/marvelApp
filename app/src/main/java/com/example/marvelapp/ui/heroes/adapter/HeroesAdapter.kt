@@ -41,9 +41,9 @@ class HeroesAdapter(
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 
-        private lateinit var char: com.example.marvelapp.domain.model.Result
+        private lateinit var char: Result
 
-        fun bind(result: com.example.marvelapp.domain.model.Result){
+        fun bind(result: Result){
             this.char = result
 
             Glide.with(itemView)

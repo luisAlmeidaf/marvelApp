@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.example.marvelapp.R
 import com.example.marvelapp.domain.model.Result
@@ -19,7 +20,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_DRAGGING
 import com.bumptech.glide.Glide
+import com.example.marvelapp.ui.heroes.fragment.HeroesFragmentDirections.navigateToHeroesDetail
 import com.example.marvelapp.ui.heroes.viewmodel.HeroesViewModel
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_heroes.view.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -115,24 +118,17 @@ class HeroesFragment :  Fragment(){
     }
 
     private fun openHeroDetail(position: Int) {
-        val manager: FragmentManager = this.fragmentManager!!
-        var transaction: FragmentTransaction = manager.beginTransaction()
-        transaction.replace(
-            R.id.container,
-            HeroesDetailFragment.newInstance(
-                heroesList[position]
-            ), "ProductListDialog"
-        )
-        transaction.commit()
+
+        val directions = navigateToHeroesDetail(heroesList[position])
+        findNavController().navigate(directions)
     }
 
     private fun setShowcase() {
 
-        Glide.with(context!!)
+        Picasso.get()
             .load("https://pixelz.cc/wp-content/uploads/2017/11/avengers-age-of-ultron-uhd-4k-wallpaper.jpg")
-            .fitCenter() //4
-            //.placeholder(R.drawable.ic_image_place_holder)
-            .into(image_hero) //8
+            .fit()
+            .into(image_hero)
     }
 
 }
